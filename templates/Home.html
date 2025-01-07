@@ -30,8 +30,12 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#services">Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Artikel</a></li>
-                        <!-- ini buat yg mw nambah login button -->
-                        <!-- <li class="nav-item"><a class="nav-link" href="#">Login</a></li> -->
+                        {% if username %}
+                        <li class="nav-item"><span class="nav-link">Welcome, {{ username }}</span></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -246,8 +250,9 @@
                                                 <p class="item-intro text-muted">Location: ${program.location}</p> <!-- **Lokasi dari database** -->
                                                 <img class="img-fluid d-block mx-auto" src="../static/assets/img/portfolio/dummy.jpg" alt="..." />
                                                 <p>Participants: ${program.participants}</p> <!-- **Jumlah peserta dari database** -->
-                                                <p>Budget: $${program.budget}</p> <!-- **Anggaran dari database** -->
+                                                <p>Budget: Rp.${program.budget}</p> <!-- **Anggaran dari database** -->
                                                 <p>Status: ${program.status}</p> <!-- **Status dari database** -->
+                                                <p>Detail: ${program.detail}</p> <!-- **Status dari database** -->
                                                 <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                                     <i class="fas fa-xmark me-1"></i>
                                                     Close Project
