@@ -13,6 +13,30 @@ db = client["education_db"]
 users_collection = db["users"]
 programs_collection = db["programs"]
 
+def initialize_database():
+    if programs_collection.count_documents({}) == 0:
+        # Data contoh untuk koleksi programs
+        programs = [
+            {"name": "Program Pemberdayaan Pemuda", "location": "Jakarta", "participants": 120, "budget": 25000, "status": "Active"},
+            {"name": "Pelatihan Keterampilan Digital", "location": "Bandung", "participants": 80, "budget": 15000, "status": "Active"},
+            {"name": "Workshop Pengembangan Karir", "location": "Surabaya", "participants": 40, "budget": 7000, "status": "Inactive"},
+            {"name": "Seminar Pendidikan Global", "location": "Medan", "participants": 200, "budget": 30000, "status": "Active"},
+            {"name": "Program Akses Pendidikan untuk Anak-anak", "location": "Yogyakarta", "participants": 100, "budget": 18000, "status": "Inactive"},
+            {"name": "Kursus Bahasa Asing untuk Profesional", "location": "Bali", "participants": 150, "budget": 22000, "status": "Active"},
+            {"name": "Pelatihan Guru Terpadu", "location": "Makassar", "participants": 60, "budget": 13000, "status": "Inactive"},
+            {"name": "Program Magang Profesional", "location": "Medan", "participants": 110, "budget": 25000, "status": "Active"},
+            {"name": "Kursus Pengembangan Teknologi Informasi", "location": "Jakarta", "participants": 75, "budget": 16000, "status": "Active"},
+            {"name": "Forum Pendidikan dan Pengembangan Sosial", "location": "Bandung", "participants": 50, "budget": 12000, "status": "Inactive"},
+            {"name": "Pelatihan Kepemimpinan di Dunia Kerja", "location": "Solo", "participants": 90, "budget": 20000, "status": "Active"},
+            {"name": "Pemberdayaan Komunitas Melalui Pendidikan", "location": "Bali", "participants": 65, "budget": 14000, "status": "Inactive"},
+            {"name": "Program Beasiswa untuk Pelajar Berprestasi", "location": "Yogyakarta", "participants": 100, "budget": 25000, "status": "Active"}
+        ]
+        programs_collection.insert_many(programs)  # Menyisipkan semua program
+        print("Database initialized with programs.")
+
+# Inisialisasi database sebelum aplikasi berjalan
+initialize_database()
+
 # Halaman Utama (langsung bisa diakses tanpa login)
 @app.route('/')
 def home():
