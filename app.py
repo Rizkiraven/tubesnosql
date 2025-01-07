@@ -23,8 +23,8 @@ def initialize_database():
                 "name": "Program Pemberdayaan Pemuda", 
                 "location": "Jakarta", 
                 "participants": 120, 
-                "budget": 25000, 
-                "status": "Active", 
+                "budget": 25000,
+                "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Rekrutmen peserta dan pelatihan dasar tentang keterampilan kepemimpinan.
                     2. Minggu 3-4: Pengembangan keterampilan teknis (seperti programming, desain grafis, dll.).
@@ -39,7 +39,7 @@ def initialize_database():
                 "location": "Bandung", 
                 "participants": 80, 
                 "budget": 15000, 
-                "status": "Active", 
+                "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pengenalan alat dan perangkat lunak yang digunakan dalam keterampilan digital.
                     2. Minggu 3-4: Pelatihan dalam desain grafis menggunakan Adobe Photoshop dan Illustrator.
@@ -54,7 +54,7 @@ def initialize_database():
                 "location": "Surabaya", 
                 "participants": 40, 
                 "budget": 7000, 
-                "status": "Inactive", 
+                "status": "Selesai", 
                 "detail": """
                     1. Hari 1: Sesi pengenalan tentang dunia kerja dan persiapan karir.
                     2. Hari 2-3: Diskusi panel dengan profesional dari berbagai industri.
@@ -69,7 +69,7 @@ def initialize_database():
                 "location": "Medan", 
                 "participants": 200, 
                 "budget": 30000, 
-                "status": "Active", 
+                "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Sesi 1: Pengenalan mengenai perkembangan pendidikan di berbagai belahan dunia.
                     2. Sesi 2: Pembahasan tentang tantangan yang dihadapi oleh sistem pendidikan global.
@@ -84,7 +84,7 @@ def initialize_database():
                 "location": "Yogyakarta", 
                 "participants": 100, 
                 "budget": 18000, 
-                "status": "Inactive", 
+                "status": "Selesai", 
                 "detail": """
                     1. Minggu 1: Pengenalan kepada anak-anak mengenai pentingnya pendidikan.
                     2. Minggu 2-4: Penyuluhan kepada orang tua mengenai akses pendidikan bagi anak-anak.
@@ -98,7 +98,7 @@ def initialize_database():
                 "location": "Bali", 
                 "participants": 150, 
                 "budget": 22000, 
-                "status": "Active", 
+                "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pelatihan dasar bahasa Inggris untuk komunikasi profesional.
                     2. Minggu 3-5: Pelatihan bahasa Mandarin untuk kebutuhan internasional.
@@ -112,7 +112,7 @@ def initialize_database():
                 "location": "Makassar", 
                 "participants": 60, 
                 "budget": 13000, 
-                "status": "Inactive", 
+                "status": "Selesai", 
                 "detail": """
                     1. Minggu 1-3: Pelatihan tentang metode pembelajaran interaktif dan kreatif.
                     2. Minggu 4-6: Pelatihan penggunaan teknologi dalam pembelajaran digital.
@@ -126,7 +126,7 @@ def initialize_database():
                 "location": "Medan", 
                 "participants": 110, 
                 "budget": 25000, 
-                "status": "Active", 
+                "status": "Sedaang Berlangsung", 
                 "detail": """
                     1. Minggu 1: Orientasi dan pengenalan lingkungan kerja di berbagai perusahaan.
                     2. Minggu 2-4: Penugasan praktis dengan bimbingan dari mentor profesional.
@@ -140,7 +140,7 @@ def initialize_database():
                 "location": "Jakarta", 
                 "participants": 75, 
                 "budget": 16000, 
-                "status": "Active", 
+                "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pengantar pengembangan perangkat lunak dan dasar-dasar pemrograman.
                     2. Minggu 3-5: Pelatihan lanjutan dalam bahasa pemrograman seperti Python dan Java.
@@ -154,7 +154,7 @@ def initialize_database():
                 "location": "Bandung", 
                 "participants": 50, 
                 "budget": 12000, 
-                "status": "Inactive", 
+                "status": "Selesai", 
                 "detail": """
                     1. Hari 1: Diskusi mengenai isu sosial terkini yang mempengaruhi dunia pendidikan.
                     2. Hari 2: Presentasi oleh ahli pendidikan mengenai inovasi dalam sistem pendidikan.
@@ -168,7 +168,7 @@ def initialize_database():
                 "location": "Solo", 
                 "participants": 90, 
                 "budget": 20000, 
-                "status": "Active", 
+                "status": "Sedaang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pengenalan kepada konsep kepemimpinan yang efektif.
                     2. Minggu 3-4: Pelatihan tentang pengambilan keputusan dan pemecahan masalah.
@@ -182,7 +182,7 @@ def initialize_database():
                 "location": "Bali", 
                 "participants": 65, 
                 "budget": 14000, 
-                "status": "Inactive", 
+                "status": "Selesai", 
                 "detail": """
                     1. Minggu 1: Pengenalan tentang pentingnya pendidikan di tingkat komunitas.
                     2. Minggu 2-4: Program pelatihan keterampilan dasar untuk masyarakat setempat.
@@ -196,7 +196,7 @@ def initialize_database():
                 "location": "Yogyakarta", 
                 "participants": 100, 
                 "budget": 25000, 
-                "status": "Active", 
+                "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1: Seleksi penerima beasiswa berdasarkan prestasi akademik dan non-akademik.
                     2. Minggu 2-4: Pelatihan untuk membantu peserta beasiswa dalam mencapai tujuan akademik mereka.
@@ -204,7 +204,52 @@ def initialize_database():
                     4. Minggu 8: Penyerahan beasiswa dan laporan pencapaian.
                     Program ini bertujuan untuk memberi kesempatan bagi pelajar berprestasi yang membutuhkan dukungan finansial untuk melanjutkan pendidikan mereka.
                 """
-            }
+            },
+            {
+        "name": "Pelatihan Startup Digital untuk Wirausahawan Muda",
+        "location": "Jakarta",
+        "participants": 50,
+        "budget": 20000,
+        "status": "Coming Soon",
+        "detail": """
+            1. Hari 1: Pengantar tentang startup digital dan tren pasar global.
+            2. Hari 2-3: Workshop membangun model bisnis menggunakan Business Model Canvas (BMC).
+            3. Hari 4: Sesi mentoring dengan pengusaha sukses untuk berbagi pengalaman.
+            4. Hari 5-6: Pelatihan pengembangan produk minimum yang layak (MVP).
+            5. Hari 7: Pitching ide bisnis di depan panel investor dan mentor.
+            Program ini memberikan pemahaman menyeluruh tentang proses membangun dan mengembangkan startup digital.
+        """
+    },
+    {
+        "name": "Kampanye Lingkungan dan Penanaman Pohon",
+        "location": "Bandung",
+        "participants": 150,
+        "budget": 12000,
+        "status": "Coming Soon",
+        "detail": """
+            1. Hari 1: Pengenalan tentang dampak perubahan iklim dan pentingnya penghijauan.
+            2. Hari 2: Diskusi kelompok tentang cara menjaga lingkungan dan solusi lokal.
+            3. Hari 3: Kegiatan penanaman 500 pohon di kawasan konservasi lokal.
+            4. Hari 4: Sesi dokumentasi dan promosi kampanye di media sosial.
+            5. Hari 5: Evaluasi hasil program dan perencanaan kampanye lanjutan.
+            Kampanye ini bertujuan untuk meningkatkan kesadaran masyarakat tentang pentingnya menjaga lingkungan.
+        """
+    },
+    {
+        "name": "Program Peningkatan Literasi Digital untuk Orang Tua",
+        "location": "Yogyakarta",
+        "participants": 80,
+        "budget": 18000,
+        "status": "Coming Soon",
+        "detail": """
+            1. Minggu 1: Dasar-dasar penggunaan perangkat digital seperti smartphone dan laptop.
+            2. Minggu 2: Pelatihan penggunaan aplikasi komunikasi seperti WhatsApp dan Zoom.
+            3. Minggu 3: Keamanan digital, termasuk mengenali phishing dan menjaga privasi online.
+            4. Minggu 4: Akses sumber daya pendidikan online untuk membantu anak belajar.
+            5. Minggu 5: Praktik langsung dalam mengelola aktivitas online keluarga.
+            Program ini bertujuan untuk memberdayakan orang tua agar lebih percaya diri dalam mendukung pendidikan anak di era digital.
+        """
+    }
         ]
         programs_collection.insert_many(programs)  # Menyisipkan semua program
         print("Database initialized with programs and detailed descriptions.")
