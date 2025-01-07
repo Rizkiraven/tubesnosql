@@ -348,13 +348,47 @@ def register():
     
     return render_template('register.html')
 
-
 # Logout
 @app.route('/logout')
 def logout():
     session.pop("username", None)  # Menghapus username dari session
     flash("Logged out successfully!", "info")
     return redirect(url_for('home'))
+
+@app.route('/search', methods=['GET'])
+def search():
+    # Ambil parameter query dari input pengguna
+    query = request.args.get('q', '').strip()  # Dapatkan query pencarian, hapus spasi tambahan
+    search_filter = {}
+
+    # Jika ada query, buat filter untuk pencarian
+    if query:
+        search_filter = {
+            "$or": [
+                {"name": {"$regex": query, "$options": "i"}},      # Cari di kolom name
+                {"location": {"$regex": query, "$options": "i"}},  # Cari di kolom location
+                {"status": {"$regex": query, "$options": "i"}}     # Cari di kolom status
+            ]
+        }
+
+    # Query ke database
+    results = programs_collection.find(search_filter)
+
+    # Kembalikan hasil sebagai JSON
+    return jsonify([
+        {
+            "_id": str(result["_id"]),  # Konversi ObjectId ke string
+            "name": result["name"],
+            "location": result["location"],
+            "status": result["status"],
+            "participants": result["participants"],
+            "budget": result["budget"],
+            "detail": result["detail"]
+        }
+        for result in results
+    ])
+
+
 # Jalankan Aplikasi
 if __name__ == "__main__":
     app.run(debug=True)

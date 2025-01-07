@@ -77,6 +77,21 @@
                     <h2 class="section-heading text-uppercase">Portfolio</h2>
                     <h3 class="section-subheading text-muted">Explore our programs and initiatives.</h3>
                 </div>
+                <!-- Search Form -->
+        <div class="row mb-4">
+            <div class="col-md-8 offset-md-2">
+                <input 
+                    type="text" 
+                    id="search-bar" 
+                    class="form-control" 
+                    placeholder="Type a keyword to search..."
+                />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" onclick="searchPrograms()">Search</button>
+            </div>
+        </div>
+        <!-- Search Results -->
                 <div class="row" id="portfolio-items">
                     <!-- **Portfolio items akan di-generate secara dinamis** -->
                 </div>
@@ -124,6 +139,44 @@
             const data = await response.json();
             return data;
         }
+        async function searchPrograms() {
+        const query = document.getElementById('search-bar').value.trim();  // Ambil query dari input
+        const response = await fetch(`/search?q=${encodeURIComponent(query)}`);  // Kirim ke backend
+        const data = await response.json();  // Terima data JSON dari backend
+
+        renderPortfolioItems(data);  // Render hasil pencarian
+    }
+
+    function renderPortfolioItems(data) {
+        const portfolioContainer = document.getElementById('portfolio-items');
+        portfolioContainer.innerHTML = '';  // Bersihkan hasil sebelumnya
+
+        if (data.length === 0) {
+            portfolioContainer.innerHTML = '<p class="text-center">No programs found.</p>';
+            return;
+        }
+
+        // Tampilkan setiap item hasil pencarian
+        data.forEach((program) => {
+            portfolioContainer.innerHTML += `
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="portfolio-item">
+                        <h4>${program.name}</h4>
+                        <p><strong>Location:</strong> ${program.location}</p>
+                        <p><strong>Status:</strong> ${program.status}</p>
+                        <p><strong>Participants:</strong> ${program.participants}</p>
+                        <p><strong>Budget:</strong> Rp.${program.budget}</p>
+                        <button class="btn btn-secondary" onclick="viewDetails('${program._id}')">View Details</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function viewDetails(id) {
+        // Arahkan ke halaman detail program
+        window.location.href = `/program/${id}`;
+    }
 
         // **Fungsi untuk membuat chart peserta**
         function createParticipantsChart(ctx, data) {
