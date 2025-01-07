@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -36,6 +36,17 @@ def initialize_database():
 
 # Inisialisasi database sebelum aplikasi berjalan
 initialize_database()
+
+@app.route('/get_program_data', methods=['GET'])
+def get_program_data():
+    programs = list(programs_collection.find({}, {"_id": 0}))  # Exclude '_id'
+    return jsonify(programs)
+
+# **Route baru untuk mendapatkan data artikel**
+@app.route('/get_artikel_data', methods=['GET'])
+def get_artikel_data():
+    programs = list(programs_collection.find({}, {"_id": 0}))  # Exclude '_id'
+    return jsonify(programs)
 
 # Halaman Utama (langsung bisa diakses tanpa login)
 @app.route('/')
