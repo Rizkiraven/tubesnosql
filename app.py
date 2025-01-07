@@ -12,7 +12,7 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["education_db"]
 users_collection = db["users"]
 programs_collection = db["programs"]
-artikel_collection = db["artikel"]
+category_collection = db["category"]
 
 # Inisialisasi database dengan detail berupa timeline atau deskripsi proyek
 def initialize_database():
@@ -24,6 +24,7 @@ def initialize_database():
                 "location": "Jakarta", 
                 "participants": 120, 
                 "budget": 25000,
+                "category": "Perguruan Tinggi",
                 "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Rekrutmen peserta dan pelatihan dasar tentang keterampilan kepemimpinan.
@@ -39,6 +40,7 @@ def initialize_database():
                 "location": "Bandung", 
                 "participants": 80, 
                 "budget": 15000, 
+                "category": "Perguruan Tinggi",
                 "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pengenalan alat dan perangkat lunak yang digunakan dalam keterampilan digital.
@@ -54,6 +56,7 @@ def initialize_database():
                 "location": "Surabaya", 
                 "participants": 40, 
                 "budget": 7000, 
+                "category": "Perguruan Tinggi",
                 "status": "Selesai", 
                 "detail": """
                     1. Hari 1: Sesi pengenalan tentang dunia kerja dan persiapan karir.
@@ -69,6 +72,7 @@ def initialize_database():
                 "location": "Medan", 
                 "participants": 200, 
                 "budget": 30000, 
+                "category": "Perguruan Tinggi",
                 "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Sesi 1: Pengenalan mengenai perkembangan pendidikan di berbagai belahan dunia.
@@ -84,6 +88,7 @@ def initialize_database():
                 "location": "Yogyakarta", 
                 "participants": 100, 
                 "budget": 18000, 
+                "category": "Umum",
                 "status": "Selesai", 
                 "detail": """
                     1. Minggu 1: Pengenalan kepada anak-anak mengenai pentingnya pendidikan.
@@ -98,6 +103,7 @@ def initialize_database():
                 "location": "Bali", 
                 "participants": 150, 
                 "budget": 22000, 
+                "category": "Umum",
                 "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pelatihan dasar bahasa Inggris untuk komunikasi profesional.
@@ -112,6 +118,7 @@ def initialize_database():
                 "location": "Makassar", 
                 "participants": 60, 
                 "budget": 13000, 
+                "category": "Perguruan Tinggi",
                 "status": "Selesai", 
                 "detail": """
                     1. Minggu 1-3: Pelatihan tentang metode pembelajaran interaktif dan kreatif.
@@ -126,6 +133,7 @@ def initialize_database():
                 "location": "Medan", 
                 "participants": 110, 
                 "budget": 25000, 
+                "category": "Perguruan Tinggi",
                 "status": "Sedaang Berlangsung", 
                 "detail": """
                     1. Minggu 1: Orientasi dan pengenalan lingkungan kerja di berbagai perusahaan.
@@ -140,6 +148,7 @@ def initialize_database():
                 "location": "Jakarta", 
                 "participants": 75, 
                 "budget": 16000, 
+                "category": "SMA",
                 "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pengantar pengembangan perangkat lunak dan dasar-dasar pemrograman.
@@ -154,6 +163,7 @@ def initialize_database():
                 "location": "Bandung", 
                 "participants": 50, 
                 "budget": 12000, 
+                "category": "Umum",
                 "status": "Selesai", 
                 "detail": """
                     1. Hari 1: Diskusi mengenai isu sosial terkini yang mempengaruhi dunia pendidikan.
@@ -168,6 +178,7 @@ def initialize_database():
                 "location": "Solo", 
                 "participants": 90, 
                 "budget": 20000, 
+                "category": "Umum",
                 "status": "Sedaang Berlangsung", 
                 "detail": """
                     1. Minggu 1-2: Pengenalan kepada konsep kepemimpinan yang efektif.
@@ -182,6 +193,7 @@ def initialize_database():
                 "location": "Bali", 
                 "participants": 65, 
                 "budget": 14000, 
+                "category": "Umum",
                 "status": "Selesai", 
                 "detail": """
                     1. Minggu 1: Pengenalan tentang pentingnya pendidikan di tingkat komunitas.
@@ -196,6 +208,7 @@ def initialize_database():
                 "location": "Yogyakarta", 
                 "participants": 100, 
                 "budget": 25000, 
+                "category": "SMP",
                 "status": "Sedang Berlangsung", 
                 "detail": """
                     1. Minggu 1: Seleksi penerima beasiswa berdasarkan prestasi akademik dan non-akademik.
@@ -210,6 +223,7 @@ def initialize_database():
         "location": "Jakarta",
         "participants": 50,
         "budget": 20000,
+        "category": "Perguruan Tinggi",
         "status": "Coming Soon",
         "detail": """
             1. Hari 1: Pengantar tentang startup digital dan tren pasar global.
@@ -225,6 +239,7 @@ def initialize_database():
         "location": "Bandung",
         "participants": 150,
         "budget": 12000,
+        "category": "Umum",
         "status": "Coming Soon",
         "detail": """
             1. Hari 1: Pengenalan tentang dampak perubahan iklim dan pentingnya penghijauan.
@@ -240,6 +255,7 @@ def initialize_database():
         "location": "Yogyakarta",
         "participants": 80,
         "budget": 18000,
+        "category": "Umum",
         "status": "Coming Soon",
         "detail": """
             1. Minggu 1: Dasar-dasar penggunaan perangkat digital seperti smartphone dan laptop.
@@ -253,6 +269,19 @@ def initialize_database():
         ]
         programs_collection.insert_many(programs)  # Menyisipkan semua program
         print("Database initialized with programs and detailed descriptions.")
+
+    if category_collection.count_documents({}) == 0:
+        category = [
+            {"name": "TK"},
+            {"name": "SD"},
+            {"name": "SMP"},
+            {"name": "SMA"},
+            {"name": "SMK"},
+            {"name": "Perguruan Tinggi"},
+            {"name": "Umum"}
+        ]
+        category_collection.insert_many(category)  # Menyisipkan semua kategori
+        print("Database initialized with categories.")
 
 # Inisialisasi database sebelum aplikasi berjalan
 initialize_database()
