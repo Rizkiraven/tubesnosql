@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Program - Educational Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Educational Program</h1>
+
+        <!-- Create Form -->
+        <form id="createForm" action="/create_program" method="POST">
+            <label for="programName">Program Name</label>
+            <input type="text" id="programName" name="programName" placeholder="Enter program name" required>
+
+            <label for="description">Program Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Enter program description"></textarea>
+
+            <label for="location">Program Location</label>
+            <select id="location" name="location" required>
+                <option value="">Select Location</option>
+                <option value="Jakarta">Jakarta</option>
+                <option value="Surabaya">Surabaya</option>
+                <option value="Bandung">Bandung</option>
+                <option value="Yogyakarta">Yogyakarta</option>
+                <option value="Semarang">Semarang</option>
+                <option value="Medan">Medan</option>
+                <option value="Makassar">Makassar</option>
+                <option value="Denpasar">Denpasar</option>
+                <option value="Balikpapan">Balikpapan</option>
+                <option value="Palembang">Palembang</option>
+            </select>
+
+            <label for="participants">Number of Participants</label>
+            <input type="number" id="participants" name="participants" placeholder="Enter number of participants" required>
+
+            <label for="budget">Budget (Rp)</label>
+            <input type="number" id="budget" name="budget" placeholder="Enter budget" required>
+
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" required>
+
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate" required>
+
+            <label for="status">Program Status</label>
+            <select id="status" name="status" required>
+                <option value="">Select Status</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+
+            <button type="submit" id="createButton">Create Program</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -378,6 +378,36 @@ def profile():
 
     return render_template('profile.html', user=user)
 
+@app.route('/create_program', methods=['GET', 'POST'])
+def create_program():
+    if request.method == 'POST':
+        # Get form data
+        program_name = request.form['programName']
+        description = request.form['description']
+        location = request.form['location']
+        participants = request.form['participants']
+        budget = request.form['budget']
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
+        status = request.form['status']
+        
+        # Process the data (e.g., save to database)
+        print("Program Created:", {
+            'program_name': program_name,
+            'description': description,
+            'location': location,
+            'participants': participants,
+            'budget': budget,
+            'start_date': start_date,
+            'end_date': end_date,
+            'status': status
+        })
+        
+        flash('Program created successfully!')
+        return redirect(url_for('profile'))
+    
+    return render_template('create_program.html')
+
 # Logout
 @app.route('/logout')
 def logout():
