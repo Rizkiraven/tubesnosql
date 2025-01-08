@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MyApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="container mt-4">
+        <h2 class="mb-4">Profile</h2>
+        <div class="card p-3 mb-4">
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label fw-bold">Username:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ user.username }}</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label fw-bold">Email:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ user.email }}</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label fw-bold">Full Name:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ user.full_name }}</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label fw-bold">Workspace:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ user.workplace }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button class="btn btn-primary mb-4">Create Program</button>
+
+        <!-- Program List -->
+        <h3>Program List</h3>
+        <ul class="list-group">
+            <li class="list-group-item">Program 1</li>
+            <li class="list-group-item">Program 2</li>
+            <li class="list-group-item">Program 3</li>
+            <!-- Add more programs as needed -->
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -329,7 +329,9 @@ def register():
         email = request.form["email"]
         username = request.form["username"]
         password = request.form["password"]
-        
+        full_name = request.form["full_name"]  # New field
+        workplace = request.form["workplace"]  # New field
+
         # Cek apakah email sudah terdaftar
         if users_collection.find_one({"email": email}):
             flash("Email is already registered!", "danger")
@@ -339,14 +341,42 @@ def register():
         if users_collection.find_one({"username": username}):
             flash("Username is already taken!", "danger")
             return redirect(url_for('register'))
-        
+
         # Simpan pengguna baru jika tidak ada masalah
         hashed_password = generate_password_hash(password)
-        users_collection.insert_one({"email": email, "username": username, "password": hashed_password})
+        users_collection.insert_one({
+            "email": email,
+            "username": username,
+            "password": hashed_password,
+            "full_name": full_name,  # Save full_name
+            "workplace": workplace   # Save workplace
+        })
         flash("Registration successful! Please log in.", "success")
         return redirect(url_for('login'))
-    
+
     return render_template('register.html')
+
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
+    if "username" not in session:
+        flash("Please log in to view your profile.", "warning")
+        return redirect(url_for('login'))
+
+    username = session["username"]
+    user = users_collection.find_one({"username": username})
+
+    if request.method == "POST":
+        full_name = request.form["full_name"]
+        workplace = request.form["workplace"]
+
+        users_collection.update_one(
+            {"username": username},
+            {"$set": {"full_name": full_name, "workplace": workplace}}
+        )
+        flash("Profile updated successfully!", "success")
+        return redirect(url_for('profile'))
+
+    return render_template('profile.html', user=user)
 
 # Logout
 @app.route('/logout')

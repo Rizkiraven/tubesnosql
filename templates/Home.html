@@ -31,7 +31,7 @@
                         <li class="nav-item"><a class="nav-link" href="#services">Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Artikel</a></li>
                         {% if username %}
-                        <li class="nav-item"><span class="nav-link">Welcome, {{ username }}</span></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Welcome, {{ username }}</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>

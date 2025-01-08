@@ -30,6 +30,14 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <div class="mb-3">
+                <label for="full_name" class="form-label">Fullname</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="workplace" class="form-label">Workplace</label>
+                <input type="text" class="form-control" id="workplace" name="workplace" required>
+            </div>
             <button type="submit" class="btn btn-primary">Register</button>
             <center>
                 <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
