@@ -375,7 +375,7 @@ def profile():
         )
         flash("Profile updated successfully!", "success")
         return redirect(url_for('profile'))
-
+        
     return render_template('profile.html', user=user)
 
 @app.route('/create_program', methods=['GET', 'POST'])
@@ -407,6 +407,50 @@ def create_program():
         return redirect(url_for('profile'))
     
     return render_template('create_program.html')
+
+@app.route('/update_program', methods=['GET', 'POST'])
+def update_program():
+    if request.method == 'POST':
+        # Get form data
+        program_id = request.form['programId']
+        program_name = request.form['programName']
+        description = request.form['description']
+        location = request.form['location']
+        participants = request.form['participants']
+        budget = request.form['budget']
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
+        status = request.form['status']
+        
+        # Process the data (e.g., update in database)
+        print("Program Updated:", {
+            'program_id': program_id,
+            'program_name': program_name,
+            'description': description,
+            'location': location,
+            'participants': participants,
+            'budget': budget,
+            'start_date': start_date,
+            'end_date': end_date,
+            'status': status
+        })
+        
+        flash('Program updated successfully!')
+        return redirect(url_for('profile'))
+    
+    # Fetch program data for pre-population (example with mock data)
+    program = {
+        'id': 1,
+        'name': 'Sample Program',
+        'description': 'This is a sample description.',
+        'location': 'Jakarta',
+        'participants': 20,
+        'budget': 5000000,
+        'start_date': '2025-01-01',
+        'end_date': '2025-01-10',
+        'status': 'Ongoing'
+    }
+    return render_template('update_program.html', program=program)
 
 # Logout
 @app.route('/logout')

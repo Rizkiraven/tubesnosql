@@ -63,10 +63,15 @@
         <!-- Program List -->
         <h3>Program List</h3>
         <ul class="list-group">
-            <li class="list-group-item">Program 1</li>
-            <li class="list-group-item">Program 2</li>
-            <li class="list-group-item">Program 3</li>
-            <!-- Add more programs as needed -->
+            {% for program in programs %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ program.name }}
+                <div>
+                    <a href="/update_program/{{ program.id }}" class="btn btn-warning btn-sm me-2">Update</a>
+                    <a href="/delete_program/{{ program.id }}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
         </ul>
     </div>
 
