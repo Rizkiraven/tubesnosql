@@ -363,7 +363,11 @@ def profile():
         return redirect(url_for('login'))
 
     username = session["username"]
-    user = users_collection.find_one({"username": username})
+    user = users_collection.find_one({"username": username}, {"_id": 0})
+
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for('login'))
 
     if request.method == "POST":
         full_name = request.form["full_name"]
@@ -375,8 +379,23 @@ def profile():
         )
         flash("Profile updated successfully!", "success")
         return redirect(url_for('profile'))
-        
-    return render_template('profile.html', user=user)
+
+    programs = programs_collection.find({"username": username})
+    return render_template('profile.html', user=user, programs=programs)
+
+@app.route('/delete_program/<program_id>', methods=["POST"])
+def delete_program(program_id):
+    if "username" not in session:
+        flash("Please log in to perform this action.", "warning")
+        return redirect(url_for('login'))
+
+    result = programs_collection.delete_one({"_id": ObjectId(program_id)})
+    if result.deleted_count > 0:
+        flash("Program deleted successfully!", "success")
+    else:
+        flash("Program not found or could not be deleted.", "danger")
+
+    return redirect(url_for('profile'))
 
 @app.route('/create_program', methods=['GET', 'POST'])
 def create_program():
