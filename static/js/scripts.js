@@ -98,7 +98,20 @@ function viewDetails(id) {
 window.location.href = `/program/${id}`;
 }
 
-// **Fungsi untuk membuat chart peserta**
+// Fungsi untuk menghitung rata-rata
+function calculateAverage(arr) {
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+
+// Fungsi untuk menghitung total berdasarkan kategori tertentu
+function groupByAndSum(data, groupKey, sumKey) {
+    return data.reduce((acc, curr) => {
+        acc[curr[groupKey]] = (acc[curr[groupKey]] || 0) + curr[sumKey];
+        return acc;
+    }, {});
+}
+
+// 1. Chart: Jumlah Peserta per Program (Bar Chart)
 function createParticipantsChart(ctx, data) {
     const labels = data.map(program => program.name);
     const participants = data.map(program => program.participants);
@@ -117,6 +130,7 @@ function createParticipantsChart(ctx, data) {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true
@@ -126,7 +140,7 @@ function createParticipantsChart(ctx, data) {
     });
 }
 
-// **Fungsi untuk membuat chart anggaran**
+// 2. Chart: Distribusi Anggaran (Pie Chart)
 function createBudgetChart(ctx, data) {
     const labels = data.map(program => program.name);
     const budgets = data.map(program => program.budget);
@@ -145,31 +159,193 @@ function createBudgetChart(ctx, data) {
                     'rgba(75, 192, 192, 0.5)',
                     'rgba(153, 102, 255, 0.5)'
                 ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
                 borderWidth: 1
             }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            maintainAspectRatio: false
         }
     });
 }
 
-// **Inisialisasi chart setelah data diterima**
+// 3. Chart: Status Program (Doughnut Chart)
+function createStatusChart(ctx, data) {
+    const statusCounts = groupByAndSum(data, 'status', 'participants');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(statusCounts),
+            datasets: [{
+                label: 'Program Status',
+                data: Object.values(statusCounts),
+                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)', 'rgba(255, 206, 86, 0.5)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+// 4. Chart: Program per Kategori (Horizontal Bar Chart)
+function createProgramsPerCategoryChart(ctx, data) {
+    const categoryCounts = groupByAndSum(data, 'category', 'participants');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(categoryCounts),
+            datasets: [{
+                label: 'Programs per Category',
+                data: Object.values(categoryCounts),
+                backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y' // Horizontal bar chart
+        }
+    });
+}
+
+// 5. Chart: Lokasi Program (Bubble Chart)
+function createProgramsPerLocationChart(ctx, data) {
+    const datasets = data.map(program => ({
+        label: program.location,
+        data: [{ x: program.budget, y: program.participants, r: Math.sqrt(program.participants) }],
+        backgroundColor: 'rgba(75, 192, 192, 0.5)'
+    }));
+
+    new Chart(ctx, {
+        type: 'bubble',
+        data: {
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: { display: true, text: 'Budget' },
+                    beginAtZero: true
+                },
+                y: {
+                    title: { display: true, text: 'Participants' },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// 6. Chart: Rata-rata Anggaran per Kategori (Bar Chart)
+function createAverageBudgetPerCategoryChart(ctx, data) {
+    const categoryBudgets = groupByAndSum(data, 'category', 'budget');
+    const categoryCounts = groupByAndSum(data, 'category', 'participants');
+    const averageBudgets = Object.keys(categoryBudgets).map(category => categoryBudgets[category] / categoryCounts[category]);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(categoryBudgets),
+            datasets: [{
+                label: 'Average Budget',
+                data: averageBudgets,
+                backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+// 7. Chart: Perbandingan Peserta dan Anggaran (Line Chart)
+function createParticipantsVsBudgetChart(ctx, data) {
+    const labels = data.map(program => program.name);
+    const participants = data.map(program => program.participants);
+    const budgets = data.map(program => program.budget);
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Participants',
+                    data: participants,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    fill: true
+                },
+                {
+                    label: 'Budget',
+                    data: budgets,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+// 8. Chart: Total Anggaran dan Total Peserta (Polar Area Chart)
+function createTotalBudgetParticipantsChart(ctx, data) {
+    const categories = [...new Set(data.map(program => program.category))];
+    const categoryBudgets = groupByAndSum(data, 'category', 'budget');
+    const categoryParticipants = groupByAndSum(data, 'category', 'participants');
+
+    new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: categories,
+            datasets: [
+                {
+                    label: 'Total Budget',
+                    data: Object.values(categoryBudgets),
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)'
+                },
+                {
+                    label: 'Total Participants',
+                    data: Object.values(categoryParticipants),
+                    backgroundColor: 'rgba(153, 102, 255, 0.5)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+// Inisialisasi semua chart
 async function initCharts() {
     const data = await fetchProgramData();
 
-    const participantsCtx = document.getElementById('participantsChart').getContext('2d');
-    createParticipantsChart(participantsCtx, data);
-
-    const budgetCtx = document.getElementById('budgetChart').getContext('2d');
-    createBudgetChart(budgetCtx, data);
+    createParticipantsChart(document.getElementById('participantsChart').getContext('2d'), data);
+    createBudgetChart(document.getElementById('budgetChart').getContext('2d'), data);
+    createStatusChart(document.getElementById('statusChart').getContext('2d'), data);
+    createProgramsPerCategoryChart(document.getElementById('categoryChart').getContext('2d'), data);
+    createProgramsPerLocationChart(document.getElementById('locationChart').getContext('2d'), data);
+    createAverageBudgetPerCategoryChart(document.getElementById('averageBudgetChart').getContext('2d'), data);
+    createParticipantsVsBudgetChart(document.getElementById('participantsVsBudgetChart').getContext('2d'), data);
+    createTotalBudgetParticipantsChart(document.getElementById('totalChart').getContext('2d'), data);
 }
 
 document.addEventListener('DOMContentLoaded', initCharts);

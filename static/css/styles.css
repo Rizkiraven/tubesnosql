@@ -4353,6 +4353,40 @@ textarea.form-control-lg {
   }
 }
 
+.card2 {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.card2-header {
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.card2-body {
+  padding: 15px;
+}
+
+.chart-container {
+  position: relative;
+  height: 400px; /* Tinggi tetap */
+  width: 100%; /* Penuhi lebar container */
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto; /* Otomatis skala */
+}
+
+
 .accordion {
   --bs-accordion-color: #212529;
   --bs-accordion-bg: #fff;

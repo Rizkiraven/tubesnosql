@@ -63,22 +63,134 @@
         </header>
         
         <!-- Services-->
-        <section class="page-section bg-light" id="services"> <!-- **ID tetap "portfolio" untuk kompatibilitas** -->
+        <section class="page-section bg-light" id="dashboard">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Dashboard</h2> <!-- **Ganti menjadi "Dashboard"** -->
-                    <h3 class="section-subheading text-muted">Visualisasi Data Menggunakan Chart</h3> <!-- **Deskripsi dashboard** -->
+                    <h2 class="section-heading text-uppercase">Dashboard</h2>
+                    <h3 class="section-subheading text-muted">Visualisasi Data Program</h3>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <canvas id="participantsChart"></canvas> <!-- **Canvas untuk chart peserta** -->
+                <!-- Chart 1 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Jumlah Peserta per Program
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="participantsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-                        <canvas id="budgetChart"></canvas> <!-- **Canvas untuk chart anggaran** -->
+                </div>
+                <!-- Chart 2 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Distribusi Anggaran
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="budgetChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart 3 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Status Program
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="statusChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart 4 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Program per Kategori
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="categoryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart 5 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Program per Lokasi
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="locationChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart 6 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Rata-rata Anggaran per Kategori
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="averageBudgetChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart 7 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Perbandingan Peserta dan Anggaran
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="participantsVsBudgetChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart 8 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card2">
+                            <div class="card2-header text-center">
+                                Total Anggaran dan Total Peserta
+                            </div>
+                            <div class="card2-body">
+                                <div class="chart-container">
+                                    <canvas id="totalChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </section>                
     
         <!-- Bootstrap core JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
