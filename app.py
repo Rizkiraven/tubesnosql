@@ -400,32 +400,61 @@ def delete_program(program_id):
 @app.route('/create_program', methods=['GET', 'POST'])
 def create_program():
     if request.method == 'POST':
-        # Get form data
-        program_name = request.form['programName']
-        description = request.form['description']
-        location = request.form['location']
-        participants = request.form['participants']
-        budget = request.form['budget']
-        start_date = request.form['startDate']
-        end_date = request.form['endDate']
-        status = request.form['status']
-        
-        # Process the data (e.g., save to database)
-        print("Program Created:", {
-            'program_name': program_name,
-            'description': description,
-            'location': location,
-            'participants': participants,
-            'budget': budget,
-            'start_date': start_date,
-            'end_date': end_date,
-            'status': status
-        })
-        
-        flash('Program created successfully!')
-        return redirect(url_for('profile'))
-    
-    return render_template('create_program.html')
+        try:
+            # Ambil username dari session
+            username = session.get('username')
+            if not username:
+                flash('You must be logged in to create a program!')
+                return redirect(url_for('login'))
+
+            # Ambil data dari form
+            program_name = request.form.get('programName', '').strip()
+            detail = request.form.get('detail', '').strip()
+            location = request.form.get('location', '').strip()
+            participants = int(request.form.get('participants', 0))
+            budget = float(request.form.get('budget', 0.0))
+            start_date = request.form.get('startDate', '').strip()
+            end_date = request.form.get('endDate', '').strip()
+            status = request.form.get('status', '').strip()
+            category = request.form.get('category', '').strip()
+
+            # Validasi kategori ada
+            if not category_collection.find_one({'name': category}):
+                flash(f'Category "{category}" does not exist!')
+                return redirect(url_for('create_program'))
+
+            # Validasi data wajib
+            if not (program_name and detail and location and start_date and end_date and status):
+                flash('Please fill in all required fields!')
+                return redirect(url_for('create_program'))
+
+            # Persiapkan data untuk disimpan
+            program_data = {
+                "username": username,  # Tambahkan username untuk filter nanti
+                "name": program_name,
+                "detail": detail,
+                "location": location,
+                "participants": participants,
+                "budget": budget,
+                "start_date": start_date,
+                "end_date": end_date,
+                "status": status,
+                "category": category,
+            }
+
+            # Masukkan ke database
+            programs_collection.insert_one(program_data)
+            flash('Program created successfully!')
+            return redirect(url_for('profile'))
+
+        except Exception as e:
+            # Tangani error tak terduga
+            flash(f'An error occurred: {str(e)}')
+            return redirect(url_for('create_program'))
+
+    # Ambil daftar kategori untuk dropdown
+    categories = [cat['name'] for cat in category_collection.find()]
+    return render_template('create_program.html', categories=categories)
 
 @app.route('/update_program', methods=['GET', 'POST'])
 def update_program():
