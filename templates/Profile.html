@@ -4,85 +4,110 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #000; /* Hitam */
+        color: #ffd700; /* Kuning */
+        font-family: "Poppins", sans-serif;
+      }
+      .navbar {
+        background-color: #000;
+        border-bottom: 2px solid #ffd700;
+      }
+      .navbar-brand {
+        font-weight: 600;
+        color: #ffd700 !important;
+        font-size: 1.5rem;
+      }
+      .btn {
+        border: 1px solid #ffd700;
+        color: #ffd700;
+        background-color: transparent;
+        font-weight: 600;
+      }
+      .btn:hover {
+        background-color: #ffd700;
+        color: #000;
+      }
+      .card {
+        background-color: #222;
+        border: 1px solid #ffd700;
+        color: #ffd700;
+      }
+      .list-group-item {
+        background-color: #222;
+        border: 1px solid #ffd700;
+        color: #ffd700;
+      }
+      .list-group-item a {
+        color: #ffd700;
+      }
+      .list-group-item a:hover {
+        text-decoration: underline;
+        color: #fff;
+      }
+    </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('home') }}">MyApp</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
-          </ul>
-        </div>
+        <a class="navbar-brand" href="{{ url_for('home') }}">PROEDU</a>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="btn btn-sm" href="{{ url_for('home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-sm" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+        </ul>
       </div>
     </nav>
 
     <div class="container mt-4">
-      <h2 class="mb-4">Profile</h2>
-      <div class="card p-3 mb-4">
-        <div class="row mb-2">
-          <label class="col-sm-2 col-form-label fw-bold">Username:</label>
-          <div class="col-sm-10">
-            <p class="form-control-plaintext">{{ user.username }}</p>
+        <h2 class="mb-4">Profile</h2>
+        <div class="card p-4 mb-4">
+          <div class="row">
+            <div class="col-sm-6 mb-3">
+              <p><strong>Username:</strong> {{ user.username }}</p>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <p><strong>Email:</strong> {{ user.email }}</p>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <p><strong>Workplace:</strong> {{ user.workplace }}</p>
+            </div>
           </div>
         </div>
-        <div class="row mb-2">
-          <label class="col-sm-2 col-form-label fw-bold">Email:</label>
-          <div class="col-sm-10">
-            <p class="form-control-plaintext">{{ user.email }}</p>
-          </div>
+      
+        <div class="mb-3">
+          <a href="{{ url_for('create_program') }}" class="btn">Create Program</a>
         </div>
-        <div class="row mb-2">
-          <label class="col-sm-2 col-form-label fw-bold">Full Name:</label>
-          <div class="col-sm-10">
-            <p class="form-control-plaintext">{{ user.full_name }}</p>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <label class="col-sm-2 col-form-label fw-bold">Workspace:</label>
-          <div class="col-sm-10">
-            <p class="form-control-plaintext">{{ user.workplace }}</p>
-          </div>
-        </div>
+      
+        <h3>Program List</h3>
+        <ul class="list-group">
+          {% for program in programs %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ program.name }}
+            <div>
+              <a href="/update_program/{{ program._id }}" class="btn btn-sm">Update</a>
+              <form action="/delete_program/{{ program._id }}" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm">Delete</button>
+              </form>
+            </div>
+          </li>
+          {% else %}
+          <li class="list-group-item">No programs available.</li>
+          {% endfor %}
+        </ul>
       </div>
-
-      <!-- Action Buttons -->
-      <a href="/create_program" class="btn btn-primary mb-4">Create Program</a>
-
-      <!-- Program List -->
-      <h3>Program List</h3>
-      <ul class="list-group">
-        {% for program in programs %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          {{ program.name }}
-          <div>
-            <a href="/update_program/{{ program._id }}" class="btn btn-warning btn-sm me-2">Update</a>
-            <form action="/delete_program/{{ program._id }}" method="POST" class="d-inline">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
