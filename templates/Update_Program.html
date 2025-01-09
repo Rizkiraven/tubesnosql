@@ -3,100 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Program - Educational Program</title>
+    <title>Update Program</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #fff9e6; /* Light yellow background */
         }
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 50px auto;
-            background: #fff;
+            background: #ffffff;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ffc107; /* Yellow border */
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #ffc107; /* Yellow color */
+            font-size: 24px;
         }
         form {
             margin-top: 20px;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
+            color: #333;
         }
-        input, textarea, select, button {
+        input, textarea, select {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #ffc107; /* Highlight yellow border */
+            outline: none;
         }
         button {
-            background-color: #007BFF;
-            color: white;
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc107; /* Yellow */
+            color: #000; /* Black */
             border: none;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #e0ac07; /* Darker yellow */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Update Educational Program</h1>
+        <h1>Update Program</h1>
 
         <!-- Update Form -->
-        <form action="{{ url_for('update_program', program_id=program._id) }}" method="POST">
-            <input type="hidden" id="programId" name="programId" value="{{ program._id }}">
+        <form action="{{ url_for('update_program', program_id=program['_id']) }}" method="POST">
 
             <label for="programName">Program Name</label>
-            <input type="text" id="programName" name="programName" value="{{ program.name }}" required>
+            <input type="text" id="programName" name="programName" value="{{ program['name'] }}" required>
 
             <label for="detail">Program Detail</label>
-            <textarea id="detail" name="detail" rows="4">{{ program.detail }}</textarea>
+            <textarea id="detail" name="detail" rows="4" required>{{ program['detail'] }}</textarea>
 
             <label for="location">Program Location</label>
             <select id="location" name="location" required>
                 <option value="">Select Location</option>
-                <option value="Jakarta" {{ 'selected' if program.location == 'Jakarta' else '' }}>Jakarta</option>
-                <option value="Surabaya" {{ 'selected' if program.location == 'Surabaya' else '' }}>Surabaya</option>
-                <option value="Bandung" {{ 'selected' if program.location == 'Bandung' else '' }}>Bandung</option>
-                <option value="Yogyakarta" {{ 'selected' if program.location == 'Yogyakarta' else '' }}>Yogyakarta</option>
-                <option value="Semarang" {{ 'selected' if program.location == 'Semarang' else '' }}>Semarang</option>
-                <option value="Medan" {{ 'selected' if program.location == 'Medan' else '' }}>Medan</option>
-                <option value="Makassar" {{ 'selected' if program.location == 'Makassar' else '' }}>Makassar</option>
-                <option value="Denpasar" {{ 'selected' if program.location == 'Denpasar' else '' }}>Denpasar</option>
-                <option value="Balikpapan" {{ 'selected' if program.location == 'Balikpapan' else '' }}>Balikpapan</option>
-                <option value="Palembang" {{ 'selected' if program.location == 'Palembang' else '' }}>Palembang</option>
+                {% for loc in ['Jakarta', 'Surabaya', 'Bandung', 'Yogyakarta', 'Semarang', 'Medan', 'Makassar', 'Denpasar', 'Balikpapan', 'Palembang'] %}
+                <option value="{{ loc }}" {{ 'selected' if program['location'] == loc else '' }}>{{ loc }}</option>
+                {% endfor %}
             </select>
 
             <label for="participants">Number of Participants</label>
-            <input type="number" id="participants" name="participants" value="{{ program.participants }}" required>
+            <input type="number" id="participants" name="participants" value="{{ program['participants'] }}" required>
 
             <label for="budget">Budget (Rp)</label>
-            <input type="number" id="budget" name="budget" value="{{ program.budget }}" required>
+            <input type="number" id="budget" name="budget" value="{{ program['budget'] }}" required>
 
             <label for="startDate">Start Date</label>
-            <input type="date" id="startDate" name="startDate" value="{{ program.start_date }}" required>
+            <input type="date" id="startDate" name="startDate" value="{{ program['start_date'] }}" required>
 
             <label for="endDate">End Date</label>
-            <input type="date" id="endDate" name="endDate" value="{{ program.end_date }}" required>
+            <input type="date" id="endDate" name="endDate" value="{{ program['end_date'] }}" required>
 
             <label for="status">Program Status</label>
             <select id="status" name="status" required>
                 <option value="">Select Status</option>
-                <option value="Ongoing" {{ 'selected' if program.status == 'Ongoing' else '' }}>Ongoing</option>
-                <option value="Completed" {{ 'selected' if program.status == 'Completed' else '' }}>Completed</option>
-                <option value="Cancelled" {{ 'selected' if program.status == 'Cancelled' else '' }}>Cancelled</option>
+                {% for stat in ['Ongoing', 'Completed', 'Cancelled'] %}
+                <option value="{{ stat }}" {{ 'selected' if program['status'] == stat else '' }}>{{ stat }}</option>
+                {% endfor %}
             </select>
 
             <button type="submit" id="updateButton">Update Program</button>
