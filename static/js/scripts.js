@@ -1,12 +1,3 @@
-/*!
-* Start Bootstrap - Agency v7.0.12 (https://startbootstrap.com/theme/agency)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
-
 window.addEventListener('DOMContentLoaded', event => {
 
     // Navbar shrink function
@@ -111,7 +102,7 @@ function groupByAndSum(data, groupKey, sumKey) {
     }, {});
 }
 
-// 1. Chart: Jumlah Peserta per Program (Bar Chart)
+// 1. Jumlah Peserta per Program
 function createParticipantsChart(ctx, data) {
     const labels = data.map(program => program.name);
     const participants = data.map(program => program.participants);
@@ -140,7 +131,7 @@ function createParticipantsChart(ctx, data) {
     });
 }
 
-// 2. Chart: Distribusi Anggaran (Pie Chart)
+// 2. Distribusi Anggaran
 function createBudgetChart(ctx, data) {
     const labels = data.map(program => program.name);
     const budgets = data.map(program => program.budget);
@@ -169,18 +160,25 @@ function createBudgetChart(ctx, data) {
     });
 }
 
-// 3. Chart: Status Program (Doughnut Chart)
+// 3. Status Program
 function createStatusChart(ctx, data) {
-    const statusCounts = groupByAndSum(data, 'status', 'participants');
+    const statusCounts = data.reduce((acc, program) => {
+        acc[program.status] = (acc[program.status] || 0) + 1;
+        return acc;
+    }, {});
 
     new Chart(ctx, {
-        type: 'doughnut',
+        type: 'pie',
         data: {
             labels: Object.keys(statusCounts),
             datasets: [{
-                label: 'Program Status',
+                label: 'Status Program',
                 data: Object.values(statusCounts),
-                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)', 'rgba(255, 206, 86, 0.5)'],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(255, 206, 86, 0.5)'
+                ],
                 borderWidth: 1
             }]
         },
@@ -191,16 +189,20 @@ function createStatusChart(ctx, data) {
     });
 }
 
-// 4. Chart: Program per Kategori (Horizontal Bar Chart)
+
+// 4. Program per Kategori
 function createProgramsPerCategoryChart(ctx, data) {
-    const categoryCounts = groupByAndSum(data, 'category', 'participants');
+    const categoryCounts = data.reduce((acc, program) => {
+        acc[program.category] = (acc[program.category] || 0) + 1;
+        return acc;
+    }, {});
 
     new Chart(ctx, {
         type: 'bar',
         data: {
             labels: Object.keys(categoryCounts),
             datasets: [{
-                label: 'Programs per Category',
+                label: 'Jumlah Program',
                 data: Object.values(categoryCounts),
                 backgroundColor: 'rgba(255, 206, 86, 0.5)',
                 borderColor: 'rgba(255, 206, 86, 1)',
@@ -215,40 +217,56 @@ function createProgramsPerCategoryChart(ctx, data) {
     });
 }
 
-// 5. Chart: Lokasi Program (Bubble Chart)
+
+// 5. Lokasi Program
 function createProgramsPerLocationChart(ctx, data) {
-    const datasets = data.map(program => ({
-        label: program.location,
-        data: [{ x: program.budget, y: program.participants, r: Math.sqrt(program.participants) }],
-        backgroundColor: 'rgba(75, 192, 192, 0.5)'
-    }));
+    const locationCounts = data.reduce((acc, program) => {
+        acc[program.location] = (acc[program.location] || 0) + 1;
+        return acc;
+    }, {});
+
+    const labels = Object.keys(locationCounts);
+    const dataPoints = Object.values(locationCounts);
 
     new Chart(ctx, {
-        type: 'bubble',
+        type: 'bar',
         data: {
-            datasets: datasets
+            labels: labels,
+            datasets: [{
+                label: 'Jumlah Program per Lokasi',
+                data: dataPoints,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                x: {
-                    title: { display: true, text: 'Budget' },
-                    beginAtZero: true
-                },
-                y: {
-                    title: { display: true, text: 'Participants' },
-                    beginAtZero: true
-                }
+                y: { beginAtZero: true }
             }
         }
     });
 }
 
-// 6. Chart: Rata-rata Anggaran per Kategori (Bar Chart)
+
+// 6. Rata-rata Anggaran per Kategori
 function createAverageBudgetPerCategoryChart(ctx, data) {
-    const categoryBudgets = groupByAndSum(data, 'category', 'budget');
-    const categoryCounts = groupByAndSum(data, 'category', 'participants');
+    const categoryBudgets = data.reduce((acc, program) => {
+        if (program.category && program.budget) {
+            acc[program.category] = (acc[program.category] || 0) + program.budget;
+        }
+        return acc;
+    }, {});
+
+    const categoryCounts = data.reduce((acc, program) => {
+        if (program.category) {
+            acc[program.category] = (acc[program.category] || 0) + 1;
+        }
+        return acc;
+    }, {});
+
     const averageBudgets = Object.keys(categoryBudgets).map(category => categoryBudgets[category] / categoryCounts[category]);
 
     new Chart(ctx, {
@@ -256,7 +274,7 @@ function createAverageBudgetPerCategoryChart(ctx, data) {
         data: {
             labels: Object.keys(categoryBudgets),
             datasets: [{
-                label: 'Average Budget',
+                label: 'Rata-rata Anggaran',
                 data: averageBudgets,
                 backgroundColor: 'rgba(153, 102, 255, 0.5)',
                 borderColor: 'rgba(153, 102, 255, 1)',
@@ -270,66 +288,70 @@ function createAverageBudgetPerCategoryChart(ctx, data) {
     });
 }
 
-// 7. Chart: Perbandingan Peserta dan Anggaran (Line Chart)
+// 7. Perbandingan Peserta dan Anggaran
 function createParticipantsVsBudgetChart(ctx, data) {
-    const labels = data.map(program => program.name);
-    const participants = data.map(program => program.participants);
-    const budgets = data.map(program => program.budget);
+    const datasets = data
+        .filter(program => program.participants && program.budget)
+        .map(program => ({
+            label: program.name,
+            data: [{
+                x: program.participants,
+                y: program.budget
+            }],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+        }));
 
     new Chart(ctx, {
-        type: 'line',
+        type: 'scatter',
         data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Participants',
-                    data: participants,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    fill: true
-                },
-                {
-                    label: 'Budget',
-                    data: budgets,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    fill: true
-                }
-            ]
+            datasets: datasets
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: { display: true, text: 'Peserta' },
+                    beginAtZero: true
+                },
+                y: {
+                    title: { display: true, text: 'Anggaran' },
+                    beginAtZero: true
+                }
+            }
         }
     });
 }
 
-// 8. Chart: Total Anggaran dan Total Peserta (Polar Area Chart)
+// 8. Total Anggaran dan Total Peserta
 function createTotalBudgetParticipantsChart(ctx, data) {
-    const categories = [...new Set(data.map(program => program.category))];
-    const categoryBudgets = groupByAndSum(data, 'category', 'budget');
-    const categoryParticipants = groupByAndSum(data, 'category', 'participants');
+    const totalBudget = data.reduce((sum, program) => sum + (program.budget || 0), 0);
+    const totalParticipants = data.reduce((sum, program) => sum + (program.participants || 0), 0);
 
     new Chart(ctx, {
-        type: 'polarArea',
+        type: 'bar',
         data: {
-            labels: categories,
-            datasets: [
-                {
-                    label: 'Total Budget',
-                    data: Object.values(categoryBudgets),
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)'
-                },
-                {
-                    label: 'Total Participants',
-                    data: Object.values(categoryParticipants),
-                    backgroundColor: 'rgba(153, 102, 255, 0.5)'
-                }
-            ]
+            labels: ['Total Budget', 'Total Participants'],
+            datasets: [{
+                label: 'Total Values',
+                data: [totalBudget, totalParticipants],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
         }
     });
 }
@@ -389,10 +411,12 @@ function renderPortfolioItems(data) {
                                     <div class="modal-body">
                                         <h2 class="text-uppercase">${program.name}</h2>
                                         <p class="item-intro text-muted">Location: ${program.location}</p>
-                                        <p>Participants: ${program.participants}</p>
-                                        <p>Budget: Rp.${program.budget}</p>
-                                        <p>Status: ${program.status}</p>
-                                        <p>Detail: ${program.detail}</p>
+                                        <p><strong>Participants:</strong> ${program.participants}</p>
+                                        <p><strong>Budget:</strong> Rp.${program.budget}</p>
+                                        <p><strong>Start Date:</strong> ${new Date(program.start_date).toLocaleDateString()}</p>
+                                        <p><strong>End Date:</strong> ${new Date(program.end_date).toLocaleDateString()}</p>
+                                        <p><strong>Status:</strong> ${program.status}</p>
+                                        <p><strong>Detail:</strong> ${program.detail}</p>
                                     </div>
                                 </div>
                             </div>
