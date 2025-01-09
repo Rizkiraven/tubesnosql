@@ -27,6 +27,8 @@ def initialize_database():
                 "budget": 25000,
                 "category": "Perguruan Tinggi",
                 "status": "Sedang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1-2: Rekrutmen peserta dan pelatihan dasar tentang keterampilan kepemimpinan.
                     2. Minggu 3-4: Pengembangan keterampilan teknis (seperti programming, desain grafis, dll.).
@@ -42,7 +44,9 @@ def initialize_database():
                 "participants": 80, 
                 "budget": 15000, 
                 "category": "Perguruan Tinggi",
-                "status": "Sedang Berlangsung", 
+                "status": "Sedang Berlangsung",
+                "start_date":"2023-7-04",
+                "end_date":"2023-7-05", 
                 "detail": """
                     1. Minggu 1-2: Pengenalan alat dan perangkat lunak yang digunakan dalam keterampilan digital.
                     2. Minggu 3-4: Pelatihan dalam desain grafis menggunakan Adobe Photoshop dan Illustrator.
@@ -59,6 +63,8 @@ def initialize_database():
                 "budget": 7000, 
                 "category": "Perguruan Tinggi",
                 "status": "Selesai", 
+                "start_date":"2021-12-01",
+                "end_date":"2021-12-02",
                 "detail": """
                     1. Hari 1: Sesi pengenalan tentang dunia kerja dan persiapan karir.
                     2. Hari 2-3: Diskusi panel dengan profesional dari berbagai industri.
@@ -75,6 +81,8 @@ def initialize_database():
                 "budget": 30000, 
                 "category": "Perguruan Tinggi",
                 "status": "Sedang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Sesi 1: Pengenalan mengenai perkembangan pendidikan di berbagai belahan dunia.
                     2. Sesi 2: Pembahasan tentang tantangan yang dihadapi oleh sistem pendidikan global.
@@ -91,6 +99,8 @@ def initialize_database():
                 "budget": 18000, 
                 "category": "Umum",
                 "status": "Selesai", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1: Pengenalan kepada anak-anak mengenai pentingnya pendidikan.
                     2. Minggu 2-4: Penyuluhan kepada orang tua mengenai akses pendidikan bagi anak-anak.
@@ -106,6 +116,8 @@ def initialize_database():
                 "budget": 22000, 
                 "category": "Umum",
                 "status": "Sedang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1-2: Pelatihan dasar bahasa Inggris untuk komunikasi profesional.
                     2. Minggu 3-5: Pelatihan bahasa Mandarin untuk kebutuhan internasional.
@@ -121,6 +133,8 @@ def initialize_database():
                 "budget": 13000, 
                 "category": "Perguruan Tinggi",
                 "status": "Selesai", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1-3: Pelatihan tentang metode pembelajaran interaktif dan kreatif.
                     2. Minggu 4-6: Pelatihan penggunaan teknologi dalam pembelajaran digital.
@@ -136,6 +150,8 @@ def initialize_database():
                 "budget": 25000, 
                 "category": "Perguruan Tinggi",
                 "status": "Sedaang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1: Orientasi dan pengenalan lingkungan kerja di berbagai perusahaan.
                     2. Minggu 2-4: Penugasan praktis dengan bimbingan dari mentor profesional.
@@ -151,6 +167,8 @@ def initialize_database():
                 "budget": 16000, 
                 "category": "SMA",
                 "status": "Sedang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1-2: Pengantar pengembangan perangkat lunak dan dasar-dasar pemrograman.
                     2. Minggu 3-5: Pelatihan lanjutan dalam bahasa pemrograman seperti Python dan Java.
@@ -166,6 +184,8 @@ def initialize_database():
                 "budget": 12000, 
                 "category": "Umum",
                 "status": "Selesai", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Hari 1: Diskusi mengenai isu sosial terkini yang mempengaruhi dunia pendidikan.
                     2. Hari 2: Presentasi oleh ahli pendidikan mengenai inovasi dalam sistem pendidikan.
@@ -181,6 +201,8 @@ def initialize_database():
                 "budget": 20000, 
                 "category": "Umum",
                 "status": "Sedaang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1-2: Pengenalan kepada konsep kepemimpinan yang efektif.
                     2. Minggu 3-4: Pelatihan tentang pengambilan keputusan dan pemecahan masalah.
@@ -196,6 +218,8 @@ def initialize_database():
                 "budget": 14000, 
                 "category": "Umum",
                 "status": "Selesai", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1: Pengenalan tentang pentingnya pendidikan di tingkat komunitas.
                     2. Minggu 2-4: Program pelatihan keterampilan dasar untuk masyarakat setempat.
@@ -211,6 +235,8 @@ def initialize_database():
                 "budget": 25000, 
                 "category": "SMP",
                 "status": "Sedang Berlangsung", 
+                "start_date":"2022-10-01",
+                "end_date":"2022-12-03",
                 "detail": """
                     1. Minggu 1: Seleksi penerima beasiswa berdasarkan prestasi akademik dan non-akademik.
                     2. Minggu 2-4: Pelatihan untuk membantu peserta beasiswa dalam mencapai tujuan akademik mereka.
@@ -226,6 +252,8 @@ def initialize_database():
         "budget": 20000,
         "category": "Perguruan Tinggi",
         "status": "Coming Soon",
+        "start_date":"2022-10-01",
+        "end_date":"2022-12-03",
         "detail": """
             1. Hari 1: Pengantar tentang startup digital dan tren pasar global.
             2. Hari 2-3: Workshop membangun model bisnis menggunakan Business Model Canvas (BMC).
@@ -242,6 +270,8 @@ def initialize_database():
         "budget": 12000,
         "category": "Umum",
         "status": "Coming Soon",
+        "start_date":"2022-10-01",
+        "end_date":"2022-12-03",
         "detail": """
             1. Hari 1: Pengenalan tentang dampak perubahan iklim dan pentingnya penghijauan.
             2. Hari 2: Diskusi kelompok tentang cara menjaga lingkungan dan solusi lokal.
@@ -258,6 +288,8 @@ def initialize_database():
         "budget": 18000,
         "category": "Umum",
         "status": "Coming Soon",
+        "start_date":"2022-10-01",
+        "end_date":"2022-12-03",
         "detail": """
             1. Minggu 1: Dasar-dasar penggunaan perangkat digital seperti smartphone dan laptop.
             2. Minggu 2: Pelatihan penggunaan aplikasi komunikasi seperti WhatsApp dan Zoom.
