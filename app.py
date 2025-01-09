@@ -452,19 +452,11 @@ def create_program():
 
 @app.route('/update_program/<program_id>', methods=['GET', 'POST'])
 def update_program(program_id):
-    print(f"Attempting to update program: {program_id}")  # Debug log
-    try:
-        # Validasi ObjectId
-        program_object_id = ObjectId(program_id)
-    except InvalidId:
-        flash("Invalid Program ID", "danger")
-        return redirect(url_for('profile'))
-
     if request.method == 'POST':
         try:
             username = session.get('username')
             if not username:
-                flash('You must be logged in to update a program!', 'danger')
+                flash('You must be logged in to update a program!')
                 return redirect(url_for('login'))
 
             # Ambil data dari form
@@ -478,19 +470,22 @@ def update_program(program_id):
             status = request.form.get('status', '').strip()
             category = request.form.get('category', '').strip()
 
-            print(f"Updating program with data: {program_name}, {location}")  # Debug log
+            # Debug Log
+            print(f"Form Data: {request.form.to_dict()}")
+            print(f"Filter: {{'_id': ObjectId(program_id), 'username': username}}")
 
             # Validasi kategori
-            if not category_collection.find_one({'name': category}):
-                flash(f'Category "{category}" does not exist!', 'danger')
+            category_exists = category_collection.find_one({'name': category})
+            if not category_exists:
+                flash(f'Category "{category}" does not exist!')
                 return redirect(url_for('update_program', program_id=program_id))
 
             # Validasi data wajib
             if not (program_name and detail and location and start_date and end_date and status):
-                flash('Please fill in all required fields!', 'danger')
+                flash('Please fill in all required fields!')
                 return redirect(url_for('update_program', program_id=program_id))
 
-            # Update data
+            # Update database
             program_data = {
                 "name": program_name,
                 "detail": detail,
@@ -504,29 +499,46 @@ def update_program(program_id):
             }
 
             result = programs_collection.update_one(
-                {"_id": program_object_id, "username": username},
+                {"_id": ObjectId(program_id), "username": username},
                 {"$set": program_data}
             )
 
+            # Debug hasil update
+            print(f"Matched Count: {result.matched_count}, Modified Count: {result.modified_count}")
+
             if result.matched_count == 0:
-                flash('Program not found or you are not authorized to update this program!', 'danger')
+                flash('Program not found or you are not authorized to update this program!')
                 return redirect(url_for('profile'))
 
-            flash('Program updated successfully!', 'success')
+            if result.modified_count == 0:
+                flash('No changes were made to the program.')
+                return redirect(url_for('update_program', program_id=program_id))
+
+            flash('Program updated successfully!')
+            print("Update successful, redirecting to profile.")
             return redirect(url_for('profile'))
 
         except Exception as e:
-            flash(f'An error occurred: {str(e)}', 'danger')
+            flash(f'An error occurred: {str(e)}')
+            print(f"Error: {str(e)}")
             return redirect(url_for('update_program', program_id=program_id))
-    
-    # Ambil program untuk diisi ke form
-    program = programs_collection.find_one({"_id": program_object_id})
-    if not program:
-        flash('Program not found!', 'danger')
+
+    # Jika GET
+    try:
+        program = programs_collection.find_one({"_id": ObjectId(program_id)})
+        if not program:
+            flash('Program not found!')
+            return redirect(url_for('profile'))
+
+        categories = [cat['name'] for cat in category_collection.find()]
+        print(f"Program Data: {program}")
+        return render_template('update_program.html', program=program, categories=categories)
+
+    except Exception as e:
+        flash(f'An error occurred: {str(e)}')
+        print(f"Error: {str(e)}")
         return redirect(url_for('profile'))
 
-    categories = [cat['name'] for cat in category_collection.find()]
-    return render_template('update_program.html', program=program, categories=categories)
 # Logout
 @app.route('/logout')
 def logout():
