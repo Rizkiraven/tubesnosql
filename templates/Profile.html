@@ -14,13 +14,13 @@
     />
     <style>
       body {
-        background-color: #000; /* Hitam */
-        color: #ffd700; /* Kuning */
+        background-color: #fff; /* Putih */
+        color: #000; /* Hitam */
         font-family: "Poppins", sans-serif;
       }
       .navbar {
-        background-color: #000;
-        border-bottom: 2px solid #ffd700;
+        background-color: #000; /* Hitam */
+        border-bottom: 2px solid #ffd700; /* Kuning */
       }
       .navbar-brand {
         font-weight: 600;
@@ -37,22 +37,37 @@
         background-color: #ffd700;
         color: #000;
       }
+      .btn-danger {
+        border: 1px solid red;
+        color: white;
+        background-color: red;
+      }
+      .btn-danger:hover {
+        background-color: darkred;
+      }
       .card {
-        background-color: #222;
+        background-color: #fff;
         border: 1px solid #ffd700;
-        color: #ffd700;
+        color: #000; /* Warna teks hitam */
       }
       .list-group-item {
-        background-color: #222;
+        background-color: #fff;
         border: 1px solid #ffd700;
-        color: #ffd700;
+        color: #000; /* Warna teks hitam */
       }
       .list-group-item a {
-        color: #ffd700;
+        color: #000;
       }
       .list-group-item a:hover {
         text-decoration: underline;
-        color: #fff;
+        color: #ffd700;
+      }
+      h2 {
+        color: #ffd700; /* Kuning */
+      }
+      .program-detail {
+        font-size: 0.85rem;
+        color: #555;
       }
     </style>
   </head>
@@ -72,42 +87,61 @@
     </nav>
 
     <div class="container mt-4">
-        <h2 class="mb-4">Profile</h2>
-        <div class="card p-4 mb-4">
-          <div class="row">
-            <div class="col-sm-6 mb-3">
-              <p><strong>Username:</strong> {{ user.username }}</p>
-            </div>
-            <div class="col-sm-6 mb-3">
-              <p><strong>Email:</strong> {{ user.email }}</p>
-            </div>
-            <div class="col-sm-6 mb-3">
-              <p><strong>Full Name:</strong> {{ user.full_name }}</p>
-            </div>
-            <div class="col-sm-6 mb-3">
-              <p><strong>Workplace:</strong> {{ user.workplace }}</p>
-            </div>
+      <h2 class="mb-4">Profile</h2>
+      <div class="card p-4 mb-4">
+        <h5 class="card-title">User Information</h5>
+        <div class="row">
+          <div class="col-sm-6 mb-3">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+          </div>
+          <div class="col-sm-6 mb-3">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+          </div>
+          <div class="col-sm-6 mb-3">
+            <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+          </div>
+          <div class="col-sm-6 mb-3">
+            <p><strong>Workplace:</strong> {{ user.workplace }}</p>
           </div>
         </div>
-      
-        <div class="mb-3">
-          <a href="{{ url_for('create_program') }}" class="btn">Create Program</a>
-        </div>
-      
-        <h3>Program List</h3>
-        <ul class="list-group">
-          {% for program in programs %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{ program.name }}
+      </div>
+
+      <div class="mb-3">
+        <a href="{{ url_for('create_program') }}" class="btn">Create Program</a>
+      </div>
+
+      <h3>Program List</h3>
+      <ul class="list-group">
+        {% for program in programs %}
+        <li class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span>{{ program.name }}</span>
+              <p class="program-detail">Detail: {{ program.detail }}</p>
+              <p class="program-detail">Location: {{ program.location }}</p>
+              <p class="program-detail">Participants: {{ program.participants }}</p>
+              <p class="program-detail">Budget: ${{ program.budget }}</p>
+              <p class="program-detail">Start Date: {{ program.start_date }}</p>
+              <p class="program-detail">End Date: {{ program.end_date }}</p>
+              <p class="program-detail">Status: {{ program.status }}</p>
+              <p class="program-detail">Category: {{ program.category }}</p>
+            </div>
             <div>
               <a href="/update_program/{{ program._id }}" class="btn btn-sm">Update</a>
               <form action="/delete_program/{{ program._id }}" method="POST" class="d-inline">
-                <button type="submit" class="btn btn-sm">Delete</button>
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this program?');">
+                  Delete
+                </button>
               </form>
             </div>
-          </li>
-          {% else %}
-          <li class="list-group-item">No programs available.</li>
-          {% endfor %}
-        </ul>
-      </div>
+          </div>
+        </li>
+        {% else %}
+        <li class="list-group-item">No programs available.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Educational Program</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fffbea; /* Kuning pucat */
             margin: 0;
             padding: 0;
+            color: #000; /* Hitam */
         }
         .container {
             width: 50%;
@@ -18,10 +20,11 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ffd700; /* Kuning emas */
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #ffd700; /* Kuning emas */
         }
         form {
             display: flex;
@@ -30,28 +33,31 @@
         label {
             margin: 10px 0 5px;
             font-weight: bold;
-            color: #555;
+            color: #000;
         }
         input, select, textarea, button {
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid #ffd700;
             border-radius: 5px;
             font-size: 16px;
+            background-color: #fff;
+            color: #000;
         }
         input:focus, select:focus, textarea:focus {
-            border-color: #007bff;
+            border-color: #ffd700;
             outline: none;
         }
         button {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #ffd700; /* Kuning emas */
+            color: #000; /* Hitam */
             border: none;
             cursor: pointer;
+            font-weight: bold;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #e0be00; /* Kuning tua */
         }
     </style>
 </head>
@@ -60,7 +66,7 @@
         <h1>Create Educational Program</h1>
 
         <!-- Create Form -->
-        <form id="createForm" action="/create_program" method="POST">
+        <form id="createForm" action="/create_program" method="POST" onsubmit="return confirm('Are you sure you want to create this program?');">
             <label for="programName">Program Name</label>
             <input type="text" id="programName" name="programName" placeholder="Enter program name" required>
 

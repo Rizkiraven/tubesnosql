@@ -402,10 +402,9 @@ def delete_program(program_id):
 def create_program():
     if request.method == 'POST':
         try:
-            # Ambil username dari session
             username = session.get('username')
             if not username:
-                flash('You must be logged in to create a program!')
+                flash('You must be logged in to create a program!', 'warning')
                 return redirect(url_for('login'))
 
             # Ambil data dari form
@@ -419,19 +418,16 @@ def create_program():
             status = request.form.get('status', '').strip()
             category = request.form.get('category', '').strip()
 
-            # Validasi kategori ada
             if not category_collection.find_one({'name': category}):
-                flash(f'Category "{category}" does not exist!')
+                flash(f'Category "{category}" does not exist!', 'warning')
                 return redirect(url_for('create_program'))
 
-            # Validasi data wajib
             if not (program_name and detail and location and start_date and end_date and status):
-                flash('Please fill in all required fields!')
+                flash('Please fill in all required fields!', 'danger')
                 return redirect(url_for('create_program'))
 
-            # Persiapkan data untuk disimpan
             program_data = {
-                "username": username,  # Tambahkan username untuk filter nanti
+                "username": username,
                 "name": program_name,
                 "detail": detail,
                 "location": location,
@@ -443,17 +439,14 @@ def create_program():
                 "category": category,
             }
 
-            # Masukkan ke database
             programs_collection.insert_one(program_data)
-            flash('Program created successfully!')
+            flash('Program created successfully!', 'success')
             return redirect(url_for('profile'))
 
         except Exception as e:
-            # Tangani error tak terduga
-            flash(f'An error occurred: {str(e)}')
+            flash(f'An error occurred: {str(e)}', 'danger')
             return redirect(url_for('create_program'))
 
-    # Ambil daftar kategori untuk dropdown
     categories = [cat['name'] for cat in category_collection.find()]
     return render_template('create_program.html', categories=categories)
 
